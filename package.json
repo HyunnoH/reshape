@@ -8,6 +8,8 @@
   "license": "MIT",
   "devDependencies": {
     "eslint": "^7.18.0",
+    "eslint-config-prettier": "^7.1.0",
+    "eslint-plugin-import": "^2.22.1",
     "prettier": "^2.2.1",
     "typescript": "^4.1.3"
   }
