@@ -1,0 +1,14 @@
+{
+  "name": "shapefile.js",
+  "version": "0.1.0",
+  "description": "A parser library for the ESRI standard shapefile",
+  "main": "dist/index.js",
+  "repository": "https://github.com/HyunnoH/shapefile.js",
+  "author": "HyunnoH <hyunnoh01@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^7.18.0",
+    "prettier": "^2.2.1",
+    "typescript": "^4.1.3"
+  }
+}
