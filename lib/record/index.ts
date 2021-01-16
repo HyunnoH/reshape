@@ -21,9 +21,14 @@ export function parseRecordContents(
   contentLength: number
 ) {
   const view = new DataView(data, startingPoint, contentLength);
-  const type = view.getInt32(0, true);
+  const type: ShapeType = view.getInt32(0, true);
 
-  return {
-    type,
-  };
+  switch (type) {
+    case ShapeType.Polygon:
+      return parsePolygon(data, startingPoint, contentLength);
+    default:
+      return {
+        type,
+      };
+  }
 }
