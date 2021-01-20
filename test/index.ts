@@ -1,7 +1,8 @@
-import { readFileSync } from "fs";
+import { readFileSync, writeFileSync } from "fs";
 import path from "path";
 import readHeader from "../lib/header";
 import { parseRecordContents, parseRecordHeader } from "../lib/record";
+import { ShapeType } from "../lib/types";
 import { toArrayBuffer } from "../lib/utils/converter";
 
 function* f(start = 100, end = Infinity, data: ArrayBuffer) {
@@ -13,6 +14,18 @@ function* f(start = 100, end = Infinity, data: ArrayBuffer) {
     lastIndex += 8;
     const contents = parseRecordContents(data, lastIndex, parsed.contentLength);
     lastIndex += parsed.contentLength * 2;
+    if (contents.type === ShapeType.Polygon) {
+      console.log("Polygon");
+      console.log(
+        contents.numParts,
+        contents.numPoints,
+        // contents.parts,
+        contents.pointsIndex,
+
+        contents.points
+      );
+    }
+
     yield { header: parsed, contents };
   }
 }
@@ -34,4 +47,9 @@ while (true) {
   records.push(result.value);
 }
 
-records.map((record) => console.log(record.contents));
+console.log(records);
+
+writeFileSync(
+  path.join(__dirname, "..", "TL_SCCO_CTPRVN.json"),
+  JSON.stringify({ header: parsedHeader, records })
+);

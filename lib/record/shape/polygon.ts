@@ -1,3 +1,6 @@
+import { ShapeType } from "../../types";
+import { parsePoint } from "./point";
+
 export function parsePolygon(
   data: ArrayBuffer,
   offset: number,
@@ -16,10 +19,10 @@ export function parsePolygon(
 
   const pointsIndex = [];
   for (let i = 0; i < numPoints; i += 1) {
-    pointsIndex.push(44 + 4 * i * 20);
+    pointsIndex.push(44 + 4 * numParts + i * 20);
   }
 
-  // const points = pointsIndex.map((point) => view.getInt32(point, true));
+  const points = pointsIndex.map((point) => parsePoint(data, offset + point));
 
   return {
     type: view.getInt32(0, true),
@@ -32,6 +35,7 @@ export function parsePolygon(
     numParts,
     numPoints,
     parts,
-    points: [],
+    points,
+    pointsIndex,
   };
 }
