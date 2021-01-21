@@ -26,3 +26,28 @@ export type MeasuredType =
   | ShapeType.PolyLineM
   | ShapeType.PolygonM
   | ShapeType.MultiPointM;
+
+export type RecordContent = {
+  type: ShapeType
+}
+
+export type Point = {
+  x: number;
+  y: number;
+}
+
+export type PolyLine = {
+  box: [number, number, number, number],
+  numParts: number,
+  numPoints: number,
+  parts: number[],
+  points: Point[]
+}
+
+export type Polygon = {
+  box: [number, number, number, number],
+  numParts: number,
+  numPoints: number,
+  parts: number[],
+  points: Point[]
+}

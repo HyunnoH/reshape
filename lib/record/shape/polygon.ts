@@ -1,11 +1,11 @@
-import { ShapeType } from "../../types";
+import { Polygon, RecordContent } from "../../types";
 import { parsePoint } from "./point";
 
 export function parsePolygon(
   data: ArrayBuffer,
   offset: number,
   length: number
-) {
+): Polygon | RecordContent {
   const view = new DataView(data, offset, length);
   const numParts = view.getInt32(36, true);
   const numPoints = view.getInt32(40, true);
@@ -19,10 +19,10 @@ export function parsePolygon(
 
   const pointsIndex = [];
   for (let i = 0; i < numPoints; i += 1) {
-    pointsIndex.push(44 + 4 * numParts + i * 20);
+    pointsIndex.push(offset + 44 + 4 * numParts + i * 16);
   }
 
-  const points = pointsIndex.map((point) => parsePoint(data, offset + point));
+  const points = pointsIndex.map((point) => parsePoint(data, point, true));
 
   return {
     type: view.getInt32(0, true),
@@ -36,6 +36,5 @@ export function parsePolygon(
     numPoints,
     parts,
     points,
-    pointsIndex,
   };
 }
